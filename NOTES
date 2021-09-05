@@ -1,0 +1,14 @@
+Friday 03 September 2021 06:59:54 PM IST
+
+--> On Github: Getting started with the REST API 
+(https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api)
+
+`curl https://api.github.com/[username]`
+
+will return a JSON that can be used to lookup link to this users
+github pages and retrive JSON for them using the links.
+
+eg: to get JSON for list of repositories in your landstrider github account,
+run command
+
+`curl https://api.github.com/users/landstrider/repos`

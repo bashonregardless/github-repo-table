@@ -1,0 +1,18 @@
+Saturday 04 September 2021 10:03:44 AM IST
+
+--> setting up the application using create react app.
+
+--> Started making the table component
+
+--> realized that table should be made such that it should be able to display arbitrary number of columns depending upon a configuration provided
+
+--> making the configuration (a scheme to specify the keys that have to be displayed in a flat table). The file tableFormat.js has name of these keys in the form of an array of strings.
+
+Saturday 04 September 2021 10:46:35 AM IST
+
+--> reading "fetch" javascript api.
+--> implementing fetch
+
+Sunday 05 September 2021 10:46:20 AM IST
+
+--> implementing state
