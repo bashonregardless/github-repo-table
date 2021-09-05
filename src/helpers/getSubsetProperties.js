@@ -1,15 +1,17 @@
-function findMatchingKey(acc, key, tableFields) {
-  Object.keys(key).forEach(function (key) {
-	if (tableFields.any(validKey => validKey === key)) {
-	  acc[key] = '';
-	  return;
+function getSubsetProperties(data = {}, tableFields = []) {
+  var obj = {};
+  for (let key in data) {
+	if (Object.prototype.hasOwnProperty.call(data, key)) {
+	  if (tableFields.some(validKey => validKey === key)) {
+		obj[key] = data[key];
+	  }
+	  if (data[key] !== null && typeof(data[key]) == 'object') {
+		// DFS of the object tree
+		getSubsetProperties(data[key], tableFields);
+	  }
 	}
-	findMatchingKey(acc, key);
-  });
-};
-
-function getSubsetProperties(data, tableFields) {
-  return Object.keys(data).reduce((acc, currVal) => findMatchingKey(acc, currVal, tableFields), {});
+  }
+  return obj;
 }
 
 export default getSubsetProperties;

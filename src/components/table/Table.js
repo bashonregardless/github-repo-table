@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useReducer } from 'react';
-import init from './calcInitState';
-import reducer from './reducer';
+import reducer, { init } from './reducer';
 import styles from './styles.css';
 
-function Table(props) {
+function Table(props = {}) {
   const [isFetching, fetchData] = useState(true);
-  const [state, dispatchUpdateState] = useReducer(reducer, {}, init);
+  const [tableState, dispatchUpdateState] = useReducer(reducer, [], init);
 
   useEffect(() => {
 	async function fetchFromApi(url) {
