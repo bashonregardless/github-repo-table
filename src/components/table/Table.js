@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
+import init from './calcInitState';
+import reducer from './reducer';
 import styles from './styles.css';
 
 function Table(props) {
   const [isFetching, fetchData] = useState(true);
+  const [state, dispatchUpdateState] = useReducer(reducer, {}, init);
 
   useEffect(() => {
 	async function fetchFromApi(url) {
@@ -13,6 +16,7 @@ function Table(props) {
 	fetchFromApi("https://api.github.com/users/landstrider/repos")
 	.then(data => {
 	  console.log(data);
+	  dispatchUpdateState({ type: 'updateState', payload: data });
 	  fetchData(false);
 	})
 	.catch(err => {
