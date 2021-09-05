@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import styles from './styles.css';
 
 function Table(props) {
-  const [fetchStatus, fetchData] = useState(true);
+  const [isFetching, fetchData] = useState(true);
 
   useEffect(() => {
 	async function fetchFromApi(url) {
@@ -15,13 +16,19 @@ function Table(props) {
 	  fetchData(false);
 	})
 	.catch(err => {
+	  // TODO An UI displaying the error state is to be displayed
 	  console.log("An error occured");
 	  console.log(err);
-	  // An UI displaying the error state is to be displayed
+	  fetchData(true); // TODO Try refetching data
 	});
-  }, [fetchStatus]); // Q. Why is it that if fetchStatus is specified as dependency, then data is getting fetched twice?
+  }, []);
+  // Q. Why is it that if isFetching is specified as dependency, then data is getting fetched twice?
+  // instead of getting fetched once like it should when component mounts?
+  // VERIFY THIS: It is because a state (isFetching, in this case) changes when the effect first runs
+  // on first mount of the component, which again triggers a re-render, after the dom is painted, the
+  // effect runs again, only this time the value of "isfetching" state does not change.
 
-  if (fetchStatus) return <div>Fetching...</div>;
+  if (isFetching) return <div>Fetching...</div>;
   return (
  	<table>
 	  <thead></thead>
