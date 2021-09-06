@@ -47,7 +47,7 @@ function Table(props = {}) {
 	return tableState.map((body = {}) => (
 	  <tr key={body.id}>{
 		tableFields.map((field, idx) => (
-		  <td key={`${body.id}${idx}`}>{body[field]}</td>
+		  <td key={idx}>{body[field]}</td>
 		))
 	  }
 	  </tr>

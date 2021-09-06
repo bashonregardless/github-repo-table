@@ -3,11 +3,9 @@ import tableFields from './tablefields';
 
 export function init(initialState = []) {
   return initialState.map((currVal) => {
-	let basename = '';
 	return getSubsetProperties(
 	  currVal, 
 	  tableFields,
-	  basename,
 	  {}, // Container object. Passing it this way maintains unique object throughout call to getSubsetProperties function.
 	)
   });

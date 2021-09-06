@@ -1,4 +1,4 @@
-function getSubsetProperties(data = {}, tableFields = [], basename = '', obj = {}) {
+function getSubsetProperties(data = {}, tableFields = [], obj = {}, basename = '') {
   for (let key in data) {
 	if (Object.prototype.hasOwnProperty.call(data, key)) {
 	  if (tableFields.some(validKey => validKey === basename + key)) {
@@ -14,7 +14,7 @@ function getSubsetProperties(data = {}, tableFields = [], basename = '', obj = {
 		// Then passing basename as parameter to getSubsetProperties function will keep a single 
 		// identity through out recursion.
 		// TODO Is there a better way to do this?
-		getSubsetProperties(data[key], tableFields, bname, obj);
+		getSubsetProperties(data[key], tableFields, obj, bname);
 	  }
 	}
   }
