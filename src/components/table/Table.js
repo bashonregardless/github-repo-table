@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import reducer, { init } from './reducer';
 import styles from './styles.css';
+import tableFields from './tablefields';
 
 function Table(props = {}) {
   const [isFetching, fetchData] = useState(true);
@@ -30,16 +31,34 @@ function Table(props = {}) {
   // VERIFY THIS: It is because a state (isFetching, in this case) changes when the effect first runs
   // on first mount of the component, which again triggers a re-render, after the dom is painted, the
   // effect runs again, only this time the value of "isfetching" state does not change.
+  //
+  function drawHeader() {
+	 return ( 
+	   <tr>{
+	      tableFields.map((header) => (
+	        <th key={header}>{header}</th>
+	      ))
+	   }
+	   </tr>
+	 )
+  }
+
+  function drawBody() {
+	return tableState.map((body = {}) => (
+	  <tr key={body.id}>{
+		tableFields.map((field, idx) => (
+		  <td key={`${body.id}${idx}`}>{body[field]}</td>
+		))
+	  }
+	  </tr>
+	));
+  }
 
   if (isFetching) return <div>Fetching...</div>;
   return (
  	<table>
-	  <thead></thead>
-	  <tbody>
-		<tr>
-		  <td></td>
-		</tr>
-	  </tbody>
+	  <thead>{drawHeader()}</thead>
+	  <tbody>{drawBody()}</tbody>
 	</table>
   );
 }
