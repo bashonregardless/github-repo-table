@@ -1,12 +1,10 @@
-import rawData from '../components/table/rawdata.js';
-
 function getSubsetProperties(data = {}, tableFields = [], obj = {}, basename = '') {
-  for (let key in rawData) {
-	if (Object.prototype.hasOwnProperty.call(rawData, key)) {
+  for (let key in data) {
+	if (Object.prototype.hasOwnProperty.call(data, key)) {
 	  if (tableFields.some(validKey => validKey === basename + key)) {
-		obj[basename + key] = rawData[key];
+		obj[basename + key] = data[key];
 	  }
-	  if (rawData[key] !== null && typeof(rawData[key]) == 'object') {
+	  if (data[key] !== null && typeof(data[key]) == 'object') {
 		// DFS of the object tree
 		let bname = basename + key + '_';
 		//basename =  basename + key + '_';
@@ -16,7 +14,7 @@ function getSubsetProperties(data = {}, tableFields = [], obj = {}, basename = '
 		// Then passing basename as parameter to getSubsetProperties function will keep a single 
 		// identity through out recursion.
 		// TODO Is there a better way to do this?
-		getSubsetProperties(rawData[key], tableFields, obj, bname);
+		getSubsetProperties(data[key], tableFields, obj, bname);
 	  }
 	}
   }

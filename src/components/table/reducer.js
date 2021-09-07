@@ -16,6 +16,8 @@ function reducer(state = {}, action = {}) {
   switch (action.type) {
 	case 'updateState':
 	  return init(action.payload);
+	case 'error':
+	  return
 	default:
 	  throw new Error();
   }

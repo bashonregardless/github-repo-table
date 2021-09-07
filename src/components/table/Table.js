@@ -2,6 +2,12 @@ import React, { useState, useEffect, useReducer } from 'react';
 import reducer, { init } from './reducer';
 import styles from './styles.css';
 import tableFields from './tablefields';
+import rawData from './rawdata.js';
+
+const initialState = {
+  tableData: [],
+  error: null,
+}
 
 function Table(props = {}) {
   const [isFetching, fetchData] = useState(true);
@@ -16,13 +22,14 @@ function Table(props = {}) {
 	fetchFromApi("https://api.github.com/users/landstrider/repos")
 	.then(data => {
 	  console.log(data);
-	  dispatchUpdateState({ type: 'updateState', payload: data });
+	  dispatchUpdateState({ type: 'updateState', payload: rawData });
 	  fetchData(false);
 	})
 	.catch(err => {
 	  // TODO An UI displaying the error state is to be displayed
 	  console.log("An error occured");
 	  console.log(err);
+	  dispatchUpdateState({ type: 'error', err });
 	  fetchData(true); // TODO Try refetching data
 	});
   }, []);
