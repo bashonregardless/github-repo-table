@@ -6,6 +6,8 @@ const tableFields = [
   "forks_count",
   "stargazers_count",
   "owner_login", // owner.login
+  "owner_owner_login", // owner.login
+  "owner_owner_avatar_url", // owner.avatar_url
   "owner_avatar_url" // owner.avatar_url
 ];
 
