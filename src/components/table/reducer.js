@@ -3,7 +3,7 @@ import tableFields from './tablefields';
 
 // NOTE assert that initialState argument matces the type passed to it.
 export function init(initialState = {}) {
-  const { tableData = [], error = null } = initialState;
+  const { tableData = [] } = initialState;
   const subsetTableData = tableData.map((currVal) => {
 	return getSubsetProperties(
 	  currVal, 
@@ -13,8 +13,8 @@ export function init(initialState = {}) {
   });
   
   return {
+	...initialState,
 	tableData: subsetTableData,
-	error
   }
 }
 

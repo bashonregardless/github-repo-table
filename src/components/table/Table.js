@@ -2,20 +2,27 @@ import React, { useState, useEffect, useReducer } from 'react';
 import reducer, { init } from './reducer';
 import styles from './styles.css';
 import tableFields from './tablefields';
-import rawData from './rawdata.js';
+// import rawData from './rawdata.js';
 
 const initialState = {
   tableData: [],
   error: null,
+  isLoading: false,
 }
 
 function Table(props = {}) {
-  const [isFetching, fetchData] = useState(true);
+  const [isFetching, setIsLoading] = useState(true);
+  const [isError, setError] = useState(false);
+  const [isLoading, setLoading ] = useState(false);
+  const [state, dispatch] = useDataApi();
   const [{ tableData = [], error }, dispatch] = useReducer(reducer, initialState, init);
+  // TODO In which cases would I want to defer(lazy) initialization, and thus use the form
+  // of useReducer(, , init) hook.
 
   // Fetch the data when component mounts
   useEffect(() => {
 	async function fetchFromApi(url) {
+	  setIsLoading(true);
 	  const response = await fetch(url);
 	  return response.json();
 	};
@@ -24,14 +31,19 @@ function Table(props = {}) {
 	.then(data => {
 	  //console.log(data);
 	  dispatch({ type: 'success', payload: { tableData: data, error } });
-	  fetchData(false);
+	  setIsLoading(false);
 	})
 	.catch(error => {
 	  // TODO An UI displaying the error state is to be displayed
 	  dispatch({ type: 'error', payload: {tableData, error} });
-	  fetchData(false); // TODO Try refetching data
+	  setIsLoading(false); // TODO Try refetching data
 	});
   }, []);
+  // Since I don't want to re fetch the data on change of any state(tableData, and error) used inside the 
+  // useEffect hook, I specify empty array as the second arg to the effect.
+  // To see a case where a re fetch is performed based on some dependency provided in array arg to effect,
+  // refer - https://www.robinwieruch.de/react-hooks-fetch-data.
+  //
   // TODO Q. Why is it that if isFetching is specified as dependency, then data is getting fetched twice?
   // instead of getting fetched once like it should when component mounts?
   // VERIFY THIS: It is because a state (isFetching, in this case) changes when the effect first runs
