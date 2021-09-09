@@ -15,6 +15,7 @@ export function init(initialState = {}) {
   return {
 	...initialState,
 	tableData: subsetTableData,
+	isLoading: false,
   }
 }
 
@@ -22,12 +23,26 @@ export function init(initialState = {}) {
 function reducer(state = {}, action = {}) {
   const { payload = {} } = action;
   switch (action.type) {
-	case 'success':
-	  return init(payload);
-	case 'error':
+	case 'fetch_init':
 	  return {
 		...state,
-		error: payload.error
+		isFetching: true,
+	  }
+	case 'fetch_success':
+	  return {
+		...state,
+		isFetching: false,
+		isLoading: true,
+	  }
+	case 'load_data':
+	  return init(payload);
+	  
+	case 'fetch_failure':
+	  return {
+		...state,
+		isLoading: false,
+		isFetching: false,
+		isError: payload.error
 	  }
 	default:
 	  throw new Error();
