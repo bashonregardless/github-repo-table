@@ -1,10 +1,10 @@
 import './App.css';
-import Table from './components/table/Table.js';
+import Form from './components-to-test-in-isolation/component-using-formik.js';
 
 function App() {
   return (
     <div className="App">
-	  <Table />
+      <Form onSubmit={() => console.log("on Submit")}/>
     </div>
   );
 }
