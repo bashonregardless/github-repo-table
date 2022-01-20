@@ -1,10 +1,10 @@
 import './App.css';
-import Form from './components-to-test-in-isolation/component-using-formik.js';
+import ReduxCounter from './src/unit-testing/components/ReduxCounter.js';
 
 function App() {
   return (
     <div className="App">
-      <Form onSubmit={() => console.log("on Submit")}/>
+      <ReduxCounter />
     </div>
   );
 }
